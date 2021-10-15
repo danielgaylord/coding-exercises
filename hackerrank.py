@@ -1,7 +1,15 @@
-import math
+from itertools import product
 
-def testFunction(a):
-    print(a.count("ANA"))
+K, mod = [int(n) for n in input().split()]
+all_narrs = []
 
-if __name__ == '__main__':
-    print(testFunction("BANANA"))
+for lists in range(K):
+    all_narrs.append(list(map(lambda n: int(n) ** 2, input().split()[1:])))
+
+S = 0
+for cart in product(*all_narrs):
+    print(cart)
+    if (sum(cart) % mod) > S:
+        S = sum(cart)
+
+print(S)
