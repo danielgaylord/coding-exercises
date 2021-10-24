@@ -1,9 +1,26 @@
-def diagonalDifference(arr):
-    slash, backslash = 0, 0
-    for row in range(len(arr)):
-        slash += arr[row][len(arr) - row - 1]
-        backslash += arr[row][row]
-    return abs(backslash - slash)
+class Item():
+    def __init__ (self, val, maxi):
+        self.val = val
+        self.maxi = maxi
 
-if __name__ == "__main__":
-    print(diagonalDifference([[11, 2, 4], [4, 5, 6], [10, 8, -12]]))
+def getMax(operations):
+    stack = []
+    maxi = float('-inf')
+    answers = []
+    
+    for i in range(len(operations)):
+        commands = operations[i].split()
+        if commands[0] == "1":
+            num = int(commands[1])
+            if len(stack) > 0:
+                maxi = max(num, stack[-1].maxi)
+            else:
+                maxi = max(num, float('-inf')
+            stack.append(Item(num, maxi))
+        if commands[0] == "2":
+           if len(stack) > 0:
+               stack.pop()
+        if commands[0] == "3":
+           if len(stack) > 0:
+               answers.append(stack[-1].maxi)
+    return answers
