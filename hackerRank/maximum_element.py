@@ -16,11 +16,12 @@ def getMax(operations):
                 maxi = max(num, stack[-1].maxi)
             else:
                 maxi = max(num, float('-inf')
-            stack.append(Item(num, maxi))
+            item = Item(num, maxi)
+            stack.append(item)
         if commands[0] == "2":
-           if len(stack) > 0:
-               stack.pop()
+            if len(stack) > 0:
+                stack.pop()
         if commands[0] == "3":
-           if len(stack) > 0:
-               answers.append(stack[-1].maxi)
+            if len(stack) > 0:
+                answers.append(stack[-1].maxi)
     return answers
