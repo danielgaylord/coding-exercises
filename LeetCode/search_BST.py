@@ -8,8 +8,8 @@ class Solution(object):
         if val == root.val:
             return root
         elif root.left and val <= root.val:
-            return searchBST(root.left)
+            return self.searchBST(root.left, val)
         elif root.right and val > root.val:
-            return searchBST(root.right)
+            return self.searchBST(root.right, val)
         else:
             return None

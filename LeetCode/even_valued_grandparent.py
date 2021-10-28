@@ -22,9 +22,8 @@ class Solution:
                     if currNode.left.right:
                         result += currNode.left.right.val
                 if rightNode:
-                    if currNode.val % 2 == 0:
-                        if currNode.right.left:
-                            result += currNode.right.left.val
-                        if currNode.right.right:
-                            result += currNode.right.right.val
+                    if currNode.right.left:
+                        result += currNode.right.left.val
+                    if currNode.right.right:
+                        result += currNode.right.right.val
         return result
