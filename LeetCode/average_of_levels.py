@@ -25,7 +25,7 @@ class Solution(object):
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
-            averages.append[float(total/items)]
+            averages.append(float(total)/float(items))
         return averages
 
         
