@@ -29,9 +29,13 @@ class Solution(object):
                 if current == solved:
                     return moves
                 zero = current.find(empty)
+                zerorow = zero // cols
+                zerocol = zero % cols
                 for d in dirs:
-                    newzero = zero + (3 * d[0]) + d[1]
-                    if 0 <= newzero < size:
+                    newrow = zerorow + d[0]
+                    newcol = zerocol + d[1]
+                    if 0 <= newrow < rows and 0 <= newcol < cols:
+                        newzero = (cols * newrow) + newcol
                         newstate = swap(current, zero, newzero)
                         if newstate not in visited:
                             queue.append(newstate)
