@@ -13,13 +13,16 @@ class Solution(object):
         if not head:
             return head
         
-        while head.val == val:
+        while head and head.val == val:
             head = head.next
         
         node = head
+        test = node
         while node:
-            if node.next and node.next.val == val:
-                node.next = node.next.next
+            test = node.next
+            while test and test.val == val:
+                test = test.next
+            node.next = test
             node = node.next
         
         return head
