@@ -20,25 +20,17 @@ class Solution(object):
         node = head
         l1 = l1.next
         l2 = l2.next
-        while l1 and l2: 
-            sum = l1.val + l2.val + carry
+        while l1 or l2: 
+            sum = carry
+            if l1:
+                sum += l1.val
+                l1 = l1.next
+            if l2:
+                sum += l2.val
+                l2 = l2.next
             carry = sum // 10
             node.next = ListNode(sum % 10)
             node = node.next
-            l1 = l1.next
-            l2 = l2.next
-        while l1:
-            sum = l1.val + carry
-            carry = sum // 10
-            node.next = ListNode(sum % 10)
-            node = node.next
-            l1 = l1.next
-        while l2:
-            sum = l2.val + carry
-            carry = sum // 10
-            node.next = ListNode(sum % 10)
-            node = node.next
-            l2 = l2.next
         if carry > 0:
             node.next = ListNode(carry)
         return head
