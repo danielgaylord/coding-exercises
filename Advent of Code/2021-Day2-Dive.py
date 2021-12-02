@@ -9,14 +9,16 @@ def dive():
     
     horiz = 0
     depth = 0
+    aim = 0
 
     for move in moves:
         if move[0] == "forward":
             horiz += int(move[1])
+            depth += aim * int(move[1])
         elif move[0] == "down":
-            depth += int(move[1])
+            aim += int(move[1])
         elif move[0] == "up":
-            depth -= int(move[1])
+            aim -= int(move[1])
 
     return horiz*depth
 
