@@ -8,23 +8,25 @@ class Solution(object):
         """
         rows = len(dungeon)
         cols = len(dungeon[0])
-        dp = [[float('-inf') for _ in range(cols)] for _ in range(rows)]
+        dp = [[0 for _ in range(cols)] for _ in range(rows)]
         queue = deque()
         queue.append((rows - 1, cols - 1))
         health = 0
-        while queue:
-            spacer, spacec = queue.popleft()
-            if spacer == rows - 1 and spacec == cols - 1:
-                health = max(-dungeon[spacer][spacec], 0) + 1
-            elif spacer == rows - 1:
-                health = max(dp[spacer][spacec + 1] - dungeon[spacer][spacec], 1)
-            elif spacec == cols - 1:
-                health = max(dp[spacer + 1][spacec] - dungeon[spacer][spacec], 1)
-            else:
-                health = min(dp[spacer][spacec - 1], dp[spacer - 1][spacec]) + max(-dungeon[spacer][spacec], 0)
-            dp[spacer][spacec] = health
-            if spacer - 1 >= rows:
-                queue.append((spacer - 1, spacec))
-            if spacec - 1 >= cols:
-                queue.append((spacer, spacec - 1))
+        #while queue:
+        #   spacer, spacec = queue.popleft()
+        for row in range(rows - 1, -1, -1):
+            for col in range(cols - 1, -1, -1):
+                if row == rows - 1 and col == cols - 1:
+                    health = max(-dungeon[row][col], 0) + 1
+                elif row == rows - 1:
+                    health = max(dp[row][col + 1] - dungeon[row][col], 1)
+                elif col == cols - 1:
+                    health = max(dp[row + 1][col] - dungeon[row][col], 1)
+                else:
+                    health = min(max(dp[row + 1][col] - dungeon[row][col], 1), max(dp[row][col + 1] - dungeon[row][col], 1))
+                dp[row][col] = health
+        #    if spacer - 1 >= 0:
+        #        queue.append((spacer - 1, spacec))
+        #    if spacec - 1 >= 0:
+        #        queue.append((spacer, spacec - 1))
         return dp[0][0]

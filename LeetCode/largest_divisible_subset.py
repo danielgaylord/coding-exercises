@@ -5,19 +5,25 @@ class Solution(object):
         :rtype: List[int]
         """
         n = len(nums)
-        dp = [[] for _ in nums]
+        dp = [1 for _ in nums]
+        prev = [-1 for _ in nums]
         nums.sort()
-        result = []
+        curr_max = 0
 
-        for i in range(n):
-            dp[i] = []
+        for i in range(1, n):
             for j in range(i):
-                if (nums[i] % nums[j] == 0 or nums[j] % nums[i] == 0) and len(dp[i]) < len(dp[j]):
-                    dp[i] = dp[j]
-            dp[i].append(nums[i])
-
+                if nums[i] % nums[j] == 0:
+                    if (dp[j] + 1 > dp[i]):
+                        dp[i] = 1 + dp[j]
+                        prev[i] = j
             
-            if len(dp[i]) > len(result):
-                result = dp[i]
+            if dp[i] > dp[curr_max]:
+                curr_max = i
         
+        result = []
+        while curr_max != -1:
+            result.append(nums[curr_max])
+            curr_max = prev[curr_max]
+        
+        result.reverse()
         return result
