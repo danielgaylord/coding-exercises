@@ -1,9 +1,7 @@
 def dive():
     moves = []
-    with open('Advent of Code/2021-Day2-Dive.txt', 'r') as input:
+    with open('Advent of Code/2021-Day2.txt', 'r') as input:
         moves = [line.rstrip().split(" ") for line in input]
-
-    print(moves)
     
     horiz = 0
     depth = 0

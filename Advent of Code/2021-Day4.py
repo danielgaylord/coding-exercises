@@ -22,10 +22,10 @@ def score(board):
                 total += int(num)
     return total
 
-def squid():
+def giant_squid():
     draws = []
     boards = []
-    with open('Advent of Code/2021-Day4-Squid.txt', 'r') as input:
+    with open('Advent of Code/2021-Day4.txt', 'r') as input:
         draws = input.readline().rstrip().split(",")
         while input.readline() == "\n":
             board = []
@@ -50,5 +50,5 @@ def squid():
 
 
 if __name__ == "__main__":
-    print(squid())
+    print(giant_squid())
         

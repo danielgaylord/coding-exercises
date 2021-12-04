@@ -1,6 +1,6 @@
-def diagnose():
+def binary_diagnostic():
     report = []
-    with open('Advent of Code/2021-Day3-Diagnostic.txt', 'r') as input:
+    with open('Advent of Code/2021-Day3.txt', 'r') as input:
         report = [line.rstrip() for line in input]
     
     report_size, diag_size = len(report), len(report[0])
@@ -45,5 +45,5 @@ def diagnose():
     return second_reading
 
 if __name__ == "__main__":
-    print(diagnose())
+    print(binary_diagnostic())
         
