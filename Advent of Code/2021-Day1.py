@@ -2,12 +2,9 @@ def sonar_sweep():
     curr = None
     sweeps = []
     increases = 0
-    while True:
-        line = input()
-        if line:
-            sweeps.append(int(line))
-        else:
-            break
+    new_increases = 0
+    with open('Advent of Code/2021-Day1.txt', 'r') as input:
+        sweeps = [int(line.rstrip()) for line in input]
     
     sum = sweeps[0] + sweeps[1]
     for i in range(len(sweeps) - 2):
