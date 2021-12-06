@@ -22,17 +22,6 @@ def laternfish():
         total += 1 + calc_fish(age, 256, spawn_check)
     return total
 
-    # for _ in range(256):
-    #     new_ages = []
-    #     for i in range(len(ages)):
-    #         if ages[i] == 0:
-    #             ages[i] = 7
-    #             new_ages.append(8)
-    #         ages[i] -= 1
-    #     ages += new_ages
-
-    # return len(ages)
-
 if __name__ == "__main__":
     print(laternfish())
         
