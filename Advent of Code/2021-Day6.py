@@ -10,7 +10,6 @@ def calc_fish(age, days_rem, spawn_check):
         spawn -= 7
     return family
 
-
 def laternfish():
     ages = []
     with open('Advent of Code/2021-Day6.txt', 'r') as input:
