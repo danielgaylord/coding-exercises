@@ -1,5 +1,6 @@
 def whale_treachery():
     hor_pos = []
+    
     with open('Advent of Code/2021-Day7.txt', 'r') as input:
         hor_pos = [int(age) for age in input.readline().split(",")]
 
@@ -8,7 +9,7 @@ def whale_treachery():
         subtotal = 0
         for num in hor_pos:
             pos_diff = abs(num - x)
-            
+
             # Swap comments of below 2 lines to switch between part 1 and 2
             #subtotal += pos_diff
             subtotal += (pos_diff * (pos_diff + 1)) // 2
