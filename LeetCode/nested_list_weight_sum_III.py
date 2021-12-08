@@ -61,3 +61,23 @@ class Solution:
         for i in range(len(nums)):
             result += nums[i] * (maxdepth[0] - depths[i] + 1)
         return result
+
+# MATH!
+class Solution:
+    def depthSumInverse(self, nestedList: List[NestedInteger]) -> int:
+        sumNums = [0]
+        sumProd = [0]
+        maxdepth = [0]
+        
+        def depthHelper(nestList, depth):
+            maxdepth[0] = max(maxdepth[0], depth)
+            for nestItem in nestList:
+                if nestItem.isInteger():
+                    item = nestItem.getInteger()
+                    sumNums[0] += item
+                    sumProd[0] += item * depth
+                else:
+                    depthHelper(nestItem.getList(), depth + 1)
+                
+        depthHelper(nestedList, 1)
+        return (maxdepth[0] + 1) * sumNums[0] - sumProd[0]
