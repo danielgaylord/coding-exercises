@@ -1,9 +1,13 @@
 def syntax_scoring(chunks):
-    points = {")": 3, "]": 57, "}": 1197, ">": 25137}
     matches = {"(": ")", "[": "]", "{": "}", "<": ">"}
     open = "([{<"
-    corrupt_score = 0
     incomplete = []
+    
+    # Part 1: For each char in each chunk, if it's an opening bracket add to stack 
+    # otherwise, pop last opening braket and check if it matches the closing one
+    # if not, add to score and fuhgeddaboudit
+    points = {")": 3, "]": 57, "}": 1197, ">": 25137}
+    corrupt_score = 0
     for chunk in chunks:
         chars = []
         corrupt = False
@@ -15,9 +19,14 @@ def syntax_scoring(chunks):
                 if matches[check] != char:
                     corrupt_score += points[char]
                     corrupt = True
+        # Part 2 addendum, to make sure we can look at incomplete lines, remaining 
+        # chars of incomplete lines to a list
         if not corrupt:
             incomplete.append(chars)
     
+    # Part 2: For each incomplete line, go through chars in reverse order to
+    # calculate the scores and to a list, finally sort the list and find the
+    # middle element
     points = {")": 1, "]": 2, "}": 3, ">": 4}
     incomp_scores = []
     for remain in incomplete:
