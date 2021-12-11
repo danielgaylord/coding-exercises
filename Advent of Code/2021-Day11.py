@@ -4,19 +4,36 @@ def dumbo_octopus(energy):
     rows = len(energy)
     cols = len(energy[0])
     dirs = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]
-
     flashes = 0
-    flash = deque()
     step = 0
+    
+    # Swap the comment in the following 2 lines to switch between part 1 and part 2
+    #for _ in range(100):
     while True:
+
         step += 1
+        flash = deque()
         flashed = []
+
+        # Step 1: 
+        # - Increase all octopus energy levels by 1
+        # - If octpous energy becomes greater than 9, set energy to -1 to count 
+        #   as 'visited' and flash it
         for row in range(rows):
             for col in range(cols):
                 energy[row][col] += 1
                 if energy[row][col] > 9:
                     energy[row][col] = -1
                     flash.append((row, col))
+        
+        # Step 2:
+        # - For part 1, capture the number of flashes that occur
+        # - Each octopus that flashed increases all adjacent octopus energy levels
+        #   - To account for an octopus only flashing once per step, only increase 
+        #     energy if it hasn't flashed (not -1)
+        # - If adjacent octpous energy becomes greater than 9, set energy to -1 to 
+        #   count as 'visited' and flash it
+        # - To prepare for next step, keep track of which octopuses flashed this step
         while flash:
             row, col = flash.popleft()
             flashes += 1
@@ -30,12 +47,17 @@ def dumbo_octopus(energy):
                             energy[new_row][new_col] = -1
                             flash.append((new_row, new_col))
             flashed.append((row, col))
+        
+        # Step 3:
+        # - Every octopus that flashed this step has energy set to 0
         for row, col in flashed:
             energy[row][col] = 0
-        print(energy)
-        if len(flashed) == 100:
+
+        # For part 2: If all octopi flashed, we done 
+        if len(flashed) == rows * cols:
             return step
 
+    # For part 1: Return number of flashes after step 100
     return flashes
 
 if __name__ == "__main__":
