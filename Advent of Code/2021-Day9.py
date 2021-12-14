@@ -2,6 +2,7 @@ from collections import deque
 from functools import reduce
 import heapq
 
+# Function to go through a basin and mark each spot with a -1 to count as 'visited' and increase size by 1
 def mark_basin(start, heightmap):
     dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
     queue = deque()
@@ -24,12 +25,17 @@ def smoke_basin(heightmap):
     rows = len(heightmap)
     cols = len(heightmap[0])
     risk_sum = 0
+
+    # Initialize heap to be of 'size' 3
     sizes = [float('-inf'), float('-inf'), float('-inf')]
     heapq.heapify(sizes)
+    
     for row in range(rows):
         for col in range(cols):
             
             # Part 1
+            # For each spot in the heightmap, check to make sure it is smaller than all of its neighbors
+            # If so, add its height + 1 to the sum of risks
             all_less = True
             for rc, cc in dirs:
                 new_row = row + rc
@@ -40,6 +46,8 @@ def smoke_basin(heightmap):
                 risk_sum += heightmap[row][col] + 1
 
             # Part 2
+            # For each spot in the heightmap, if it hasn't been visited yet and is not a 9 it is a new basin
+            # If so, find the size of the basin and mark all of its regions as visited (Heap ensures we only keep top 3 values)
             if heightmap[row][col] != -1 and heightmap[row][col] != 9:
                 heapq.heappushpop(sizes, mark_basin((row, col), heightmap))
  
