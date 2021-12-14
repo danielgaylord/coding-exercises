@@ -13,9 +13,11 @@ class Solution:
             sum = 0
             if low <= node.val <= high:
                 sum += node.val
-            if node.left:
                 sum += helper(node.left, low, high)
-            if node.right:
                 sum += helper(node.right, low, high)
+            elif node.val < low:
+                sum += helper(node.right, low, high)
+            elif node.val > high:
+                sum += helper(node.left, low, high)
             return sum
         return helper(root, low, high)
