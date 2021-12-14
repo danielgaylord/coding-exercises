@@ -1,7 +1,7 @@
 def transparent_origami(points, folds, max_x, max_y):
     
     # Build the starting grid placing '#' on each point in coordinate list
-    grid = [["." for _ in range(max_x + 1)] for _ in range(max_y + 1)]
+    grid = [[" " for _ in range(max_x + 1)] for _ in range(max_y + 1)]
     for x, y in points:
        grid[y][x] = "#"
 
@@ -22,7 +22,7 @@ def transparent_origami(points, folds, max_x, max_y):
             high = max(rows - 1, rows - 1 + offset)
             # Build new temp array to 'fold onto' can also mutate 'given'
             # array, but that could result in more bugs than I'd want to solve
-            temp = [["." for _ in range(cols)] for _ in range((high - low) // 2)]
+            temp = [[" " for _ in range(cols)] for _ in range((high - low) // 2)]
             for row in range((high - low) // 2):
                 # Count up from top and down from bottom
                 top = low + row
@@ -94,7 +94,7 @@ def transparent_origami_v2(points, folds):
         points = temp
 
     # Represent points on grid
-    grid = [["." for _ in range(min_x, max_x + 1)] for _ in range(min_y, max_y + 1)]
+    grid = [[" " for _ in range(min_x, max_x + 1)] for _ in range(min_y, max_y + 1)]
     for x, y in points:
        grid[y][x] = "#"
     
