@@ -69,12 +69,49 @@ def transparent_origami(points, folds, max_x, max_y):
     
     return count
 
+# Version 2...
+# Instead of holding onto values in an array, due to memory this isn't good for larger datasets
+def transparent_origami_v2(points, folds):
+    # Hold onto, and keep track of, mins and maxs for final printing
+    min_x = max_x = min_y = max_y = 0
+    for i in range(len(folds)):
+        axis , line = folds[i]
+        temp = set()
+        min_x, max_x = float('inf'), float('-inf')
+        min_y, max_y = float('inf'), float('-inf')
+        # For each point, mirror across x or y fold line
+        for x, y in points:
+            if axis == "y" and y > line:
+                y = line - (y - line)
+            elif axis == "x" and x > line:
+                x = line - (x - line)
+            min_x, max_x = min(min_x, x), max(max_x, x)
+            min_y, max_y = min(min_y, y), max(max_y, y)
+            # Temp set for ease of adding new values so no dups occur, this makes temp size
+            # equal to number of '#'
+            if (x, y) not in temp:
+                temp.add((x, y))
+        points = temp
+
+    # Represent points on grid
+    grid = [["." for _ in range(min_x, max_x + 1)] for _ in range(min_y, max_y + 1)]
+    for x, y in points:
+       grid[y][x] = "#"
+    
+    # Print grid
+    for row in grid:
+        for col in row:
+            print(col, end="")
+        print()
+    
+    return len(points)
+
 if __name__ == "__main__":
-    points = []
+    points = set()
     folds = []
     max_x = 0
     max_y = 0
-    with open('Advent of Code/2021-Day13.txt', 'r') as input:
+    with open('Advent of Code/crazy.txt', 'r') as input:
         for line in input:
             if line != "\n":
 
@@ -84,11 +121,11 @@ if __name__ == "__main__":
                     # Keep track of max x and y along the way for the main function
                     max_x = max(max_x, x)
                     max_y = max(max_y, y)
-                    points.append((x, y))
+                    points.add((x, y))
                 else:
                     instr = line.rstrip().split(" ")
                     axis, val = instr[2].split("=")
                     folds.append((axis, int(val)))            
     
-    print(transparent_origami(points, folds, max_x, max_y))
+    print(transparent_origami_v2(points, folds))
         
