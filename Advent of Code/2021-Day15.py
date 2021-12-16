@@ -20,20 +20,18 @@ def chiton(file, growth):
     start = (0, 0)
     end = ((rows * growth) - 1, (cols * growth) - 1)
     to_visit = [(0, start)]
-    distances = {}
+    distances = {start: 0}
     heapq.heapify(to_visit)
     while to_visit:
-        dist, loc = heapq.heappop(to_visit)
+        priority, loc = heapq.heappop(to_visit)
         
         # Quick exit when we get to end of path
         if loc == end:
-            return dist
+            break
         row, col = loc[0], loc[1]
         
         # To make sure that we only process each location once, if we can get to this
         # location my a shorter path, just move on
-        if loc in distances and dist > distances[loc]:
-            continue
         for rc, cc, in dirs:
             new_row = row + rc
             new_col = col + cc
@@ -48,17 +46,20 @@ def chiton(file, growth):
                 weight += (new_row // rows) + (new_col // cols)
                 if weight > 9:
                     weight %= 9
-                new_dist = dist + weight
+                new_dist = distances[loc] + weight
                 new_loc = (new_row, new_col)
 
                 # Only add a node to be visited if we haven't been there before or we have, but we
                 # found a shorter path
                 if (new_loc in distances and new_dist < distances[new_loc]) or new_loc not in distances:
                     distances[new_loc] = new_dist
-                    heapq.heappush(to_visit, (new_dist, new_loc))
+                    # Dijkstra
+                    #priority = new_dist
+                    # A*
+                    priority = new_dist + (abs(new_row - end[0]) + abs(new_col - end[1]))
+                    heapq.heappush(to_visit, (priority, new_loc))
     
-    # Due to quick exit and visiting all nodes, we would have already returned before this point
-    return "You shouldn't be here..."
+    return distances[end]
 
 # Practicing unit testing on given test input and expected results
 class Day15Tests(unittest.TestCase):
