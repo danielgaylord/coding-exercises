@@ -1,0 +1,81 @@
+import unittest
+from collections import defaultdict
+
+# Read puzzle input and return as usable data structure
+def parse_input(file):
+    target_area = defaultdict(list)
+    with open(file, 'r') as input:
+        for line in input:
+            prune = line.rstrip().split(": ")
+            prune = prune[1].split(", ")
+            for dim in prune:
+                dim = dim.split("=")
+                target_area[dim[0]] = [int(x) for x in dim[1].split("..")]
+    return target_area
+
+def trick_shot(file):
+    target_area = parse_input(file)
+    probe_s = (0, 0)
+
+    max_height = 0
+    y_diff = abs(target_area["y"][0] - probe_s[1])
+    for y_val in range(0, y_diff):
+        max_height += y_val
+
+    possible_y = defaultdict(list)
+    for init_y in range(target_area["y"][0], y_diff):
+        check = init_y
+        y_loc = probe_s[1]
+        steps = 0
+        while y_loc >= target_area["y"][0]:
+            if target_area["y"][0] <= y_loc <= target_area["y"][1]:
+                possible_y[steps].append(init_y)
+            steps += 1
+            y_loc += check
+            check -= 1
+
+    min_x = 0
+    x_loc = 0
+    while x_loc < target_area["x"][0]:
+        min_x += 1
+        x_loc += min_x
+    possible_x = defaultdict(list)
+    for init_x in range(min_x, target_area["x"][1] + 1):
+        check = init_x
+        x_loc = probe_s[0]
+        steps = 0
+        while steps <= max(possible_y.keys()):
+            if target_area["x"][0] <= x_loc <= target_area["x"][1]:
+                possible_x[steps].append(init_x)
+            steps += 1
+            x_loc += check
+            check = max(check - 1, 0)
+
+    init_vel = set()
+    for step in range(max(possible_y.keys()) + 1):
+        if step in possible_x and step in possible_y:
+            for init_x in possible_x[step]:
+                for init_y in possible_y[step]:
+                    init_vel.add((init_x, init_y))
+
+    return len(init_vel)
+
+# Practicing unit testing on given test input and expected results
+class Day17Tests(unittest.TestCase):
+    def test_packet_decoder_part1(self):
+        self.assertEqual(trick_shot('Advent of Code/test.txt'), 45)
+    
+    def test_packet_decoder_part2(self):
+        self.assertEqual(trick_shot('Advent of Code/test.txt'), 45)
+
+if __name__ == "__main__":
+    #unittest.main(verbosity=2)
+    
+    # Part 1 solution
+    print(trick_shot('Advent of Code/test.txt'))
+    #print(trick_shot('Advent of Code/2021-Day17.txt'))
+    
+    # Part 2 solution
+    #print(trick_shot('Advent of Code/test.txt'))
+    print(trick_shot('Advent of Code/2021-Day17.txt'))
+        
