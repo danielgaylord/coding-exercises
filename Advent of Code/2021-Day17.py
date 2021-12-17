@@ -17,11 +17,15 @@ def trick_shot(file):
     target_area = parse_input(file)
     probe_s = (0, 0)
 
+    # 'Quick' calc for part 1: Sum of 0 through distance between lowest target y and the start y
     max_height = 0
     y_diff = abs(target_area["y"][0] - probe_s[1])
     for y_val in range(0, y_diff):
         max_height += y_val
 
+    # For all possible initial y velocities, they will range from the lowest y target to the
+    # greatest height (part 1 solution). For each of these velocities, see how many steps it
+    # takes them to hit the target area (potentially multiple steps per velocity)
     possible_y = defaultdict(list)
     for init_y in range(target_area["y"][0], y_diff):
         check = init_y
@@ -34,6 +38,10 @@ def trick_shot(file):
             y_loc += check
             check -= 1
 
+    # For all possible initial x velocities, they will range from the lowest width (similar
+    # to greatest height) to the greatest x target. For each of these velocities, see how many 
+    # steps it takes them to hit the target area (potentially multiple steps per velocity) The 
+    # max number of steps is the max y steps, as x cannot go lower than 0
     min_x = 0
     x_loc = 0
     while x_loc < target_area["x"][0]:
@@ -51,6 +59,8 @@ def trick_shot(file):
             x_loc += check
             check = max(check - 1, 0)
 
+    # Create a set of all possible initial velocities based on initial y and x pairs based on
+    # number of steps
     init_vel = set()
     for step in range(max(possible_y.keys()) + 1):
         if step in possible_x and step in possible_y:
