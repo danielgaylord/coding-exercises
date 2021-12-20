@@ -14,15 +14,19 @@ def parse_input(file):
 def core(file, times):
     enh_algo, image = parse_input(file)
 
+    # 9 directions to check and keeping track of what an 'empty space' represents due to flashing
     dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]
     inf_spc = "0"
+
     for _ in range(times):
         rows = len(image)
         cols = len(image[0])
+        # Image grows 1 in every direction each iteration
         enh_image = [['.' for _ in range(cols + 2)] for _ in range(rows + 2)]
         for row in range(-1, rows + 1):
             for col in range(-1, cols + 1):
                 pixel = ""
+                # Convert 3x3 square to binary, if out of bounds use 'empty space'
                 for rc, cc in dirs:
                     p_row = row + rc
                     p_col = col + cc
@@ -30,7 +34,9 @@ def core(file, times):
                         pixel += "1" if image[p_row][p_col] == "#" else "0"
                     else:
                         pixel += inf_spc
+                # Update new, enhanced image with binary pixel and enhancement algorithm
                 enh_image[row + 1][col + 1] = enh_algo[int(pixel, 2)]
+        # Set image to enhanced image and update 'empty space'
         inf_spc = "1" if enh_algo[int((inf_spc * 9), 2)] == "#" else "0"
         image = enh_image
 
