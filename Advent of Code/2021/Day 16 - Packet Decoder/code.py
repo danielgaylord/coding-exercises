@@ -72,7 +72,7 @@ def core(file, part):
     if part == 2:
         return total_val
 
-# Practicing unit testing on given test input and expected results
+# Unit testing on given test input and expected results
 class TestCases(unittest.TestCase):
     def test_part1(self):
         self.assertEqual(core('example.txt', 1), 16)

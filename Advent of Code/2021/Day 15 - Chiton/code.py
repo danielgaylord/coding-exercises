@@ -61,7 +61,7 @@ def core(file, growth):
     
     return distances[end]
 
-# Practicing unit testing on given test input and expected results
+# Unit testing on given test input and expected results
 class TestCases(unittest.TestCase):
     def test_part1(self):
         self.assertEqual(core('example.txt', 1), 40)
