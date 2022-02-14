@@ -10,9 +10,9 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        def dfs(node):
+        def max_depth(node):
             if not node:
                 return 0
             else:
-                return max(dfs(node.left) + 1, dfs(node.right) + 1)
-        return dfs(root)
+                return max(max_depth(node.left) + 1, max_depth(node.right) + 1)
+        return max_depth(root)
