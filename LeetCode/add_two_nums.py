@@ -14,12 +14,10 @@ class Solution(object):
             return l2
         if not l2:
             return l1
-        sum = l1.val + l2.val
-        carry = sum // 10
-        head = ListNode(sum % 10)
+        
+        head = ListNode()
         node = head
-        l1 = l1.next
-        l2 = l2.next
+
         while l1 or l2: 
             sum = carry
             if l1:
@@ -28,9 +26,10 @@ class Solution(object):
             if l2:
                 sum += l2.val
                 l2 = l2.next
-            carry = sum // 10
-            node.next = ListNode(sum % 10)
+            carry, node.next = sum // 10, ListNode(sum % 10)
             node = node.next
+        
         if carry > 0:
             node.next = ListNode(carry)
-        return head
+    
+        return head.next
